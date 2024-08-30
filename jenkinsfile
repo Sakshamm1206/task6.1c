@@ -38,12 +38,13 @@ pipeline {
                 echo 'Performing Security Scan...'
             }
             post {
-                always {
-                    emailext subject: "Security Scan - ${currentBuild.currentResult}",
-                             body: "Please see the attached security scan logs.",
-                             attachLog: true,
-                             to: "${env.EMAIL_RECIPIENT}"
+                success {
+                     mail to:"sakshamsachdeva1206@gmail.com",
+                     subject:"Build Status email"
+                     body:"integration was successful"
+                     attachlog: true
                 }
+
             }
         }
 
