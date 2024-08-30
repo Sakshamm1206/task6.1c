@@ -18,11 +18,11 @@ pipeline {
                 echo 'Running Unit and Integration Tests...'
             }
             post {
-                always {
-                    emailext subject: "Unit and Integration Tests - ${currentBuild.currentResult}",
-                             body: "Please see the attached test logs.",
-                             attachLog: true,
-                             to: "${env.EMAIL_RECIPIENT}"
+                success {
+                     mail to:"sakshamsachdeva1206@gmail.com",
+                     subject:"Build Status email"
+                     body:"integration was successful"
+                   
                 }
             }
         }
@@ -42,7 +42,7 @@ pipeline {
                      mail to:"sakshamsachdeva1206@gmail.com",
                      subject:"Build Status email"
                      body:"integration was successful"
-                     attachlog: true
+                     
                 }
 
             }
