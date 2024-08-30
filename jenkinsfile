@@ -18,11 +18,13 @@ pipeline {
                 echo 'Running Unit and Integration Tests...'
             }
             post {
-                success {
-                     mail to:"sakshamsachdeva1206@gmail.com",
-                     subject:"Build Status email"
-                     body:"integration was successful"
-                   
+                always {
+                    // Corrected mail step with required parameters
+                    emailext(
+                        subject: "Unit and Integration Tests - ${currentBuild.currentResult}",
+                        body: "Unit and Integration Tests were completed. Please check the logs for more details.",
+                        to: "${env.EMAIL_RECIPIENT}"
+                    )
                 }
             }
         }
@@ -38,13 +40,14 @@ pipeline {
                 echo 'Performing Security Scan...'
             }
             post {
-                success {
-                     mail to:"sakshamsachdeva1206@gmail.com",
-                     subject:"Build Status email"
-                     body:"integration was successful"
-                     
+                always {
+                    
+                    emailext(
+                        subject: "Security Scan - ${currentBuild.currentResult}",
+                        body: "Security Scan was completed. Please check the logs for more details.",
+                        to: "${env.EMAIL_RECIPIENT}"
+                    )
                 }
-
             }
         }
 
