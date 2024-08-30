@@ -5,25 +5,21 @@ pipeline {
         // Define the email recipient
         EMAIL_RECIPIENT = 'sakshamsachdeva1206@gmail.com'
     }
- 
-           //build stage  
+
     stages {
         stage('Build') {
             steps {
                 echo 'Building the application...'
-                
             }
         }
-        //stage 2
 
         stage('Unit and Integration Tests') {
             steps {
                 echo 'Running Unit and Integration Tests...'
-               
             }
             post {
                 always {
-                    subject: "Unit and Integration Tests - ${currentBuild.currentResult}",
+                    emailext subject: "Unit and Integration Tests - ${currentBuild.currentResult}",
                              body: "Please see the attached test logs.",
                              attachLog: true,
                              to: "${env.EMAIL_RECIPIENT}"
@@ -34,17 +30,16 @@ pipeline {
         stage('Code Analysis') {
             steps {
                 echo 'Running Code Analysis...'
-                
+            }
         }
 
         stage('Security Scan') {
             steps {
                 echo 'Performing Security Scan...'
-                
             }
             post {
                 always {
-                subject: "Security Scan - ${currentBuild.currentResult}",
+                    emailext subject: "Security Scan - ${currentBuild.currentResult}",
                              body: "Please see the attached security scan logs.",
                              attachLog: true,
                              to: "${env.EMAIL_RECIPIENT}"
@@ -55,21 +50,18 @@ pipeline {
         stage('Deploy to Staging') {
             steps {
                 echo 'Deploying to Staging...'
-                
             }
         }
 
         stage('Integration Tests on Staging') {
             steps {
                 echo 'Running Integration Tests on Staging...'
-                
             }
         }
 
         stage('Deploy to Production') {
             steps {
                 echo 'Deploying to Production...'
-                
             }
         }
     }
